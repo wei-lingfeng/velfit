@@ -51,7 +51,7 @@ def linear_fit(x, y, sigma=None, absolute_sigma=False):
             perr *= reduced_chi2**0.5
         else:
             warnings.warn(
-                "Degree of freedom <= 0. Cannot rescale the uncertainty.",
+                "Degree of freedom <= 0. Covariance of the parameters could not be estimated. Setting parameter uncertainties to infinity.",
                 OptimizeWarning, stacklevel=2
             )
             perr *= np.inf
