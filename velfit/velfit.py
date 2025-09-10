@@ -8,7 +8,7 @@ from scipy.optimize import OptimizeWarning
 def linear(x, k, b):
     return k*x + b
 
-def linear_fit(x, y, sigma=None, absolute_sigma=True):
+def linear_fit(x, y, sigma=None, absolute_sigma=False):
     """Weighted linear regression (See https://en.wikipedia.org/wiki/Weighted_least_squares#Solution). Recommended for low-dimension, non-degenerate data. Otherwise, please use scipy.curve_fit.
 
     Parameters
@@ -20,7 +20,7 @@ def linear_fit(x, y, sigma=None, absolute_sigma=True):
     sigma : array-like, optional
         Weighted by 1/sigma**2. If not provided, weight = 1, by default None
     absolute_sigma : bool, optional
-        If True (default), sigma is used in an absolute sense and the estimated parameter uncertainty reflects these absolute values. If False, only the relative magnitudes of the sigma values matter, by default True
+        If True, sigma is used in an absolute sense and the estimated parameter uncertainty reflects these absolute values. If False, only the relative magnitudes of the sigma values matter, by default False
     
     Returns
     -------
