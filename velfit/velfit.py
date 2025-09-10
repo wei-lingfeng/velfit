@@ -1,6 +1,9 @@
-from tqdm import tqdm
 import numpy as np
 import pandas as pd
+import warnings
+from tqdm import tqdm
+from scipy.optimize import OptimizeWarning
+
 
 def linear(x, k, b):
     return k*x + b
@@ -42,9 +45,16 @@ def linear_fit(x, y, sigma=None, absolute_sigma=True):
     chi2 = residual.T @ W @ residual
     
     if not absolute_sigma:
-        print(chi2, len(x), perr)
-        reduced_chi2 = chi2/(len(x) - 2)
-        perr *= reduced_chi2**0.5
+        degree_of_freedom = len(x) - 2
+        if degree_of_freedom > 0:
+            reduced_chi2 = chi2/(len(x) - 2)
+            perr *= reduced_chi2**0.5
+        else:
+            warnings.warn(
+                "Degree of freedom <= 0. Cannot rescale the uncertainty.",
+                OptimizeWarning, stacklevel=2
+            )
+            perr *= np.inf
     
     result = {
         'slope': popt[0],
